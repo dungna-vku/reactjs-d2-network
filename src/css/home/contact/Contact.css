@@ -1,0 +1,50 @@
+.contact {
+  width: 20%;
+  padding: 15px 0;
+  margin: 15px;
+  /* position: fixed; */
+  /* right: 0; */
+  max-height: 85vh;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.contact__header {
+  padding: 0 10px 15px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+}
+
+.contact__header-text {
+  color: gray;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contact__header-amount {
+  padding: 0 7px;
+  height: 24px;
+  color: white;
+  background-color: gray;
+  font-weight: 700;
+  text-align: center;
+  line-height: 24px;
+}
+
+@media screen and (max-width: 890px) {
+  .contact {
+    width: fit-content;
+    /* display: none; */
+    /* align-self: flex-end; */
+  }
+
+  .contact__header {
+    justify-content: center;
+  }
+
+  .contact__header-text {
+    display: none;
+  }
+}

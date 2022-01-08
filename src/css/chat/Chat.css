@@ -1,0 +1,236 @@
+.chat {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 60px) !important;
+  background-color: white;
+}
+
+.chat .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+.chatList {
+  width: 360px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Header */
+.chatList__header {
+  padding: 10px 10px 5px 10px;
+  border-bottom: 2px solid #ddd;
+}
+
+.chatList__headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatList__headerTop span {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.chatList__newIconContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chatList__newIconContainer:hover {
+  background-color: #c7cbd4;
+}
+
+.chatList__newIcon {
+  font-size: 20px;
+}
+
+.chatList__headerSearchBar {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.chatList__headerSearchBack {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chatList__headerSearchBack:hover {
+  background-color: var(--background-color);
+}
+
+.chatList__headerSearch {
+  width: 100%;
+  padding: 0 10px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: var(--background-color);
+}
+
+.chatList__headerSearchIcon {
+  color: var(--gray-color);
+}
+
+.chatList__headerSearchInput {
+  flex: 2;
+  padding: 10px;
+  background-color: var(--background-color);
+  display: block;
+}
+
+.chatList__dropdown {
+  width: 100%;
+  overflow-y: auto;
+  display: none;
+  /* padding: 5px; */
+}
+
+.chatList__searchItem {
+  width: 100%;
+  padding: 10px 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.chatList__searchItem:hover {
+  background-color: var(--background-color);
+}
+
+.chatList__searchItemText {
+  margin-left: 10px;
+  width: 300px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.chatList__headerOnline {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.chatList__headerOnlineUser {
+  display: inline;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.chatList__onlineIcon {
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border-radius: 15px;
+  background-color: white;
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+}
+
+.chatList__onlineIcon div {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background-color: var(--green-color);
+}
+
+/* Main */
+.chatList__main {
+  padding: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chatList__chatItemContainer {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.chatList__chatItemContainer:hover {
+  background-color: var(--background-color);
+}
+
+@media screen and (max-width: 890px) {
+  .chatList {
+    width: fit-content;
+  }
+
+  .chatList__headerTop {
+    display: none;
+  }
+
+  .chatList__headerSearchBar {
+    width: fit-content;
+  }
+
+  .chatList__headerSearchBack {
+    width: 24px;
+    height: fit-content;
+  }
+
+  .chatList__headerSearchInput {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+    border-top-right-radius: 10px;
+    box-shadow: 4px 4px 15px -7px rgba(0, 0, 0, 0.5);
+  }
+
+  .chatList__headerOnline {
+    width: 60px;
+  }
+
+  .chatList__dropdown {
+    width: 186px;
+    max-height: calc(100vh - 200px) !important;
+    position: fixed;
+    top: 146px;
+    z-index: 1000;
+    background-color: white;
+    border-bottom-right-radius: 10px;
+    box-shadow: 4px 4px 15px -7px rgba(0, 0, 0, 0.5);
+    overflow-x: initial;
+  }
+
+  .chatList__searchItem {
+    width: 184px;
+  }
+
+  .chatList__searchItemText {
+    width: 100px;
+  }
+
+  .chatList__dropdown.avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .chatList__main {
+    width: fit-content;
+  }
+}

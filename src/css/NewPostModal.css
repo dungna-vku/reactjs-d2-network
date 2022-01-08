@@ -1,0 +1,157 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+}
+
+.modal__container {
+  max-width: 450px;
+  flex: 1;
+  margin: 0 100px;
+  height: 70%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal__header h1 {
+  font-size: 22px;
+}
+
+.modal__closeBtn {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 15px;
+  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.modal__closeBtn:hover {
+  background-color: #ccc;
+}
+
+.modal__closeIcon {
+  font-size: 20px;
+  color: #555;
+}
+
+.modal__body {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal__userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal__username {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.modal__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.modal__textarea {
+  outline: none;
+  border: none;
+  resize: none;
+  width: 100%;
+  font-size: 20px;
+  font-family: unset;
+  flex: 1;
+}
+
+.modal__image {
+  width: 100%;
+  overflow-y: auto;
+  flex: 1;
+  position: relative;
+  border-radius: 10px;
+}
+
+.modal__removeImage {
+  width: 30px;
+  height: 30px;
+  background-color: #eee;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  cursor: pointer;
+}
+
+.modal__button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__imagePicker,
+.modal__submit {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.modal__imagePicker {
+  color: var(--green-color);
+  cursor: pointer;
+}
+
+.modal__imagePicker:hover {
+  background-color: var(--background-color);
+}
+
+.modal__imagePickerIcon {
+  margin-right: 10px;
+}
+
+.modal__imagePicker label {
+  cursor: pointer;
+}
+
+.modal__submit {
+  border: none;
+  outline: none;
+}

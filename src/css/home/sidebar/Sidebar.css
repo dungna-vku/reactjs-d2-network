@@ -1,0 +1,11 @@
+.sidebar {
+  width: 20%;
+  /* position: fixed; */
+  /* left: 0; */
+}
+
+@media screen and (max-width: 890px) {
+  .sidebar {
+    width: fit-content;
+  }
+}

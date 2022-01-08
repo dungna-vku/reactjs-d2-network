@@ -1,0 +1,22 @@
+.story {
+  max-width: 150px;
+  flex: 1;
+  height: 220px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+  transition: transform 0.15s ease-in;
+}
+
+.story:hover {
+  transform: scale(1.03);
+}
+
+.story h4 {
+  color: white;
+}
