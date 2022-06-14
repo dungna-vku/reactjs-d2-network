@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../css/home/feed/Feed.css";
 import PostSender from "./PostSender";
-// import StoryReel from "./StoryReel";
+import StoryReel from "./StoryReel";
 import Post from "./Post";
 import {
   collectionGroup,
@@ -10,27 +10,28 @@ import {
   query,
 } from "firebase/firestore";
 import { auth, db } from "../../../utils/firebase";
+import Notification from "./Notification";
 
 function Feed({ currentUser }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let isSubcribed = true;
-
-    onSnapshot(
+    const subcribe = onSnapshot(
       query(collectionGroup(db, "posts"), orderBy("createdAt", "desc")),
       (snapshot) => {
-        if (isSubcribed && currentUser.following) {
+        if (currentUser.following) {
+          setPosts([]);
           let newPosts = [];
 
           snapshot.docs.forEach((post) => {
+            const data = post.data();
             if (
-              currentUser.following.includes(post.data().userEmail) ||
-              post.data().userEmail === auth.currentUser.email
+              currentUser.following.includes(data.userEmail) ||
+              data.userEmail === auth.currentUser.email
             ) {
               newPosts.push({
                 id: post.id,
-                data: post.data(),
+                data: data,
               });
             }
           });
@@ -41,19 +42,19 @@ function Feed({ currentUser }) {
     );
 
     return () => {
-      isSubcribed = false;
+      subcribe();
     };
-  }, [currentUser.following]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="feed p-15">
-      {/* <StoryReel /> */}
+      <Notification />
+      <StoryReel currentUser={currentUser} />
       <PostSender currentUser={currentUser} />
-      {posts &&
-        posts.length > 0 &&
-        posts.map((post, index) => (
-          <Post currentUser={currentUser} post={post} key={index} />
-        ))}
+      {posts?.map((post, index) => (
+        <Post currentUser={currentUser} post={post} key={index} />
+      ))}
     </div>
   );
 }

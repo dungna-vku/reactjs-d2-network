@@ -22,6 +22,8 @@ import {
 import Chat from "./screens/Chat";
 import Header from "./components/Header";
 import Profile from "./screens/Profile";
+import PostDetail from "./screens/PostDetail";
+import StoryDetail from "./screens/StoryDetail";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -43,13 +45,13 @@ function App() {
               })
             );
           }
-          console.log("[USER] log in:", user.email);
+          // console.log("[USER] log in:", user.email);
         });
       } else {
         // Người dùng đăng xuất
         disableNetwork(db).then(() => {
           setCurrentUser();
-          console.log("[USER] not found");
+          // console.log("[USER] not found");
         });
       }
     });
@@ -68,6 +70,22 @@ function App() {
             element={!currentUser ? <Register /> : <Navigate to="/" />}
           />
           <Route
+            path="/post/:id"
+            element={
+              currentUser ? (
+                <div className="container">
+                  <Header currentUser={currentUser} />
+
+                  <div className="main">
+                    <PostDetail currentUser={currentUser} />
+                  </div>
+                </div>
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
             path="/chat"
             element={
               currentUser ? (
@@ -78,6 +96,16 @@ function App() {
                     <Chat currentUser={currentUser} />
                   </div>
                 </div>
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="/stories"
+            element={
+              currentUser ? (
+                <StoryDetail currentUser={currentUser} />
               ) : (
                 <Navigate to="/" />
               )

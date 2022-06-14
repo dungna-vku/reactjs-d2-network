@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "../css/Header.css";
-import logoImage from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
-import { auth, db } from "../utils/firebase";
-import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db } from "../utils/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import NewPostModal from "./NewPostModal";
 // import IncomingCall from "./IncomingCall";
-import Validator from "email-validator";
+// import Validator from "email-validator";
 
 function Header({ currentUser }) {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
-  // Lắng nghe cuộc gọi đến
-  useEffect(() => {
-    if (Validator.validate(currentUser?.inCall)) {
-      if (
-        window.confirm(
-          `Bạn có muốn nhận cuộc gọi từ ${currentUser.inCall} hay không?`
-        )
-      ) {
-        const url = `https://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${currentUser.inCall}`;
-        window.open(url, "Video call", "width=200,height=200");
-      } else {
-        updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
-          inCall: "reject",
-        });
-      }
-    }
-  }, [currentUser.inCall]);
+  // // Lắng nghe cuộc gọi đến
+  // useEffect(() => {
+  //   if (Validator.validate(currentUser?.inCall)) {
+  //     if (
+  //       window.confirm(
+  //         `Bạn có muốn nhận cuộc gọi từ ${currentUser.inCall} hay không?`
+  //       )
+  //     ) {
+  //       const url = `https://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${currentUser.inCall}`;
+  //       window.open(url, "Video call", "width=200,height=200", "_self");
+  //       console.log(url);
+  //     } else {
+  //       updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
+  //         inCall: "reject",
+  //       });
+  //     }
+  //   }
+  // }, [currentUser.inCall]);
 
   // Hiện modal
   const handleOpenModal = (e) => {
@@ -115,7 +115,8 @@ function Header({ currentUser }) {
         <div className="header__left">
           <div className="header__left-row">
             <Link to="/" className="header__logo">
-              <img height="100%" src={logoImage} alt="Logo" />
+              {/* <img height="100%" src={logoImage} alt="Logo" /> */}
+              <h1 className="header__text">D2 Network</h1>
             </Link>
 
             <div className="header__searchBack" onClick={collapseSearch}>

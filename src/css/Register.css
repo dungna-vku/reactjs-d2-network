@@ -7,7 +7,9 @@
 }
 
 .register__logo {
-  color: var(--main-color);
+  background: linear-gradient(to right, #896AF3 0%, #53B8F7 100%);
+  background-clip: text;
+  color: transparent;
   font-size: 50px;
 }
 

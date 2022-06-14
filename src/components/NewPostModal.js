@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../css/NewPostModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faImage } from "@fortawesome/free-solid-svg-icons";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 import { auth, db, storage } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -10,6 +16,8 @@ function NewPostModal({ currentUser }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState();
   const [imageURL, setImageURL] = useState();
+  const [isStory, setIsStory] = useState(false);
+  const authEmail = auth.currentUser.email;
 
   // Ẩn modal
   const handleCloseModal = (e) => {
@@ -48,56 +56,128 @@ function NewPostModal({ currentUser }) {
     setImageURL();
   };
 
-  // Đăng bài viết
+  // Tạo mới
   const handleSubmit = async (e) => {
-    if (!imageURL) {
-      await addDoc(collection(db, `/users/${auth.currentUser.email}/posts`), {
-        caption: caption,
-        imageURL: "",
-        imageWidth: 0,
-        imageHeight: 0,
-        userUID: auth.currentUser.uid,
-        userEmail: auth.currentUser.email,
-        username: currentUser.username,
-        profilePicture: currentUser.profilePicture,
-        createdAt: new Date().getTime(),
-        likesByUsers: [],
-        comments: [],
-      });
-    } else {
-      await uploadBytesResumable(
-        ref(storage, `/users/${auth.currentUser.email}/posts/${image.name}`),
-        image
-      ).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          // Lấy kích thước hình ảnh được upload lên storage
-          const img = new Image();
-          img.src = url;
-          img.onload = () => {
-            const width = img.width;
-            const height = img.height;
-            const time = new Date().getTime();
+    const time = new Date().getTime();
 
-            addDoc(collection(db, `/users/${auth.currentUser.email}/posts`), {
-              caption: caption,
-              imageURL: url,
-              imageWidth: width,
-              imageHeight: height,
-              userUID: auth.currentUser.uid,
-              userEmail: auth.currentUser.email,
-              username: currentUser.username,
-              profilePicture: currentUser.profilePicture,
-              createdAt: time,
-              likesByUsers: [],
-              comments: [],
-            }).then(() => {
-              setCaption("");
-              handleRemoveImage();
-              handleCloseModal(e);
-            });
-          };
+    if (!imageURL) {
+      // Bài viết
+      if (!isStory) {
+        await addDoc(collection(db, `/users/${authEmail}/posts`), {
+          caption: caption,
+          imageURL: "",
+          imageWidth: 0,
+          imageHeight: 0,
+          userUID: auth.currentUser.uid,
+          userEmail: authEmail,
+          createdAt: time,
+          likesByUsers: [],
+          comments: [],
+        }).then(() => {
+          updateDoc(doc(db, `/users/${authEmail}`), {
+            posts: increment(1),
+          }).then(() => {
+            setCaption("");
+            setIsStory(false);
+            handleRemoveImage();
+            handleCloseModal(e);
+          });
         });
-      });
+      } else {
+        // Tin
+        await addDoc(collection(db, `/users/${authEmail}/stories`), {
+          email: authEmail,
+          caption: caption,
+          imageURL: "",
+          imageWidth: 0,
+          imageHeight: 0,
+          likes: [],
+          createdAt: time,
+        }).then(() => {
+          updateDoc(doc(db, `/users/${authEmail}`), {
+            hasStory: true,
+          }).then(() => {
+            setCaption("");
+            setIsStory(false);
+            handleRemoveImage();
+            handleCloseModal(e);
+          });
+        });
+      }
+    } else {
+      if (!isStory) {
+        // Bài viết
+        await uploadBytesResumable(
+          ref(storage, `/users/${authEmail}/posts/${image.name}`),
+          image
+        ).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            // Lấy kích thước hình ảnh được upload lên storage
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+              const width = img.width;
+              const height = img.height;
+
+              addDoc(collection(db, `/users/${authEmail}/posts`), {
+                caption: caption,
+                imageURL: url,
+                imageWidth: width,
+                imageHeight: height,
+                userUID: auth.currentUser.uid,
+                userEmail: authEmail,
+                createdAt: time,
+                likesByUsers: [],
+                comments: [],
+              }).then(() => {
+                updateDoc(doc(db, `/users/${authEmail}`), {
+                  posts: increment(1),
+                }).then(() => {
+                  setCaption("");
+                  setIsStory(false);
+                  handleRemoveImage();
+                  handleCloseModal(e);
+                });
+              });
+            };
+          });
+        });
+      } else {
+        // Tin
+        await uploadBytesResumable(
+          ref(storage, `/users/${authEmail}/stories/${image.name}`),
+          image
+        ).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            // Lấy kích thước hình ảnh được upload lên storage
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+              const width = img.width;
+              const height = img.height;
+
+              addDoc(collection(db, `/users/${authEmail}/stories`), {
+                email: authEmail,
+                caption: caption,
+                imageURL: url,
+                imageWidth: width,
+                imageHeight: height,
+                likes: [],
+                createdAt: time,
+              }).then(() => {
+                updateDoc(doc(db, `/users/${authEmail}`), {
+                  hasStory: true,
+                }).then(() => {
+                  setCaption("");
+                  setIsStory(false);
+                  handleRemoveImage();
+                  handleCloseModal(e);
+                });
+              });
+            };
+          });
+        });
+      }
     }
   };
 
@@ -108,7 +188,7 @@ function NewPostModal({ currentUser }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal__header p-15">
-          <h1>Tạo bài viết</h1>
+          <h1>Tạo mới</h1>
           <div className="modal__closeBtn" onClick={handleCloseModal}>
             <FontAwesomeIcon icon={faClose} className="modal__closeIcon" />
           </div>
@@ -151,6 +231,20 @@ function NewPostModal({ currentUser }) {
           </div>
 
           <div className="modal__button">
+            <div className="modal__checkbox">
+              <label htmlFor="myCheckbox">
+                <input
+                  className="modal__checkboxInput"
+                  type="checkbox"
+                  name="myCheckbox"
+                  id="myCheckbox"
+                  value={isStory}
+                  onChange={() => setIsStory(!isStory)}
+                />
+                Thêm vào tin
+              </label>
+            </div>
+
             <div className="modal__imagePicker br-10">
               <label htmlFor="myImage">
                 <FontAwesomeIcon

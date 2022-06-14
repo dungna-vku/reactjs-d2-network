@@ -45,6 +45,7 @@ function Register() {
             profilePicture: defaultProfilePicture,
             background: defaultBackground,
             posts: 0,
+            newNotifications: 0,
             biography: "",
             online: false,
             hasStory: false,

@@ -33,7 +33,7 @@
 }
 
 .storyReel__create {
-  max-width: 150px;
+  width: 140px;
   flex: 1;
   height: 220px;
   margin-right: 15px;

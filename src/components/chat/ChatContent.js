@@ -490,7 +490,7 @@ function ChatContent({ selectedChat }) {
   return (
     <>
       <div className="chatContent__header">
-        <Link to="/" className="chatContent__headerLeft">
+        <Link to={`/${user?.uid}`} className="chatContent__headerLeft">
           <div className="chatContent__avatar">
             <div
               // className={`${
@@ -498,10 +498,10 @@ function ChatContent({ selectedChat }) {
               // }`}
               className="avatar"
               style={{
-                backgroundImage: `url(${user && user.profilePicture})`,
+                backgroundImage: `url(${user?.profilePicture})`,
               }}
             />
-            {user && user.online && (
+            {user?.online && (
               <div className="chatContent__onlineIcon">
                 <div></div>
               </div>
@@ -509,11 +509,9 @@ function ChatContent({ selectedChat }) {
           </div>
 
           <div className="chatContent__headerText">
-            <span className="chatContent__username">
-              {user && user.username}
-            </span>
+            <span className="chatContent__username">{user?.username}</span>
 
-            {user && user.online && (
+            {user?.online && (
               <span className="chatContent__onlineStatus">Đang hoạt động</span>
             )}
           </div>
@@ -522,9 +520,7 @@ function ChatContent({ selectedChat }) {
         <div className="chatContent__headerRight">
           <button
             className="chatContent__call"
-            disabled={
-              (user && user.online && user.inCall) || (user && !user.online)
-            }
+            disabled={(user?.online && user?.inCall) || !user?.online}
             onClick={(e) => videoCall(e)}
           >
             <FontAwesomeIcon
@@ -532,12 +528,12 @@ function ChatContent({ selectedChat }) {
               className="chatContent__headerIcon"
               style={{
                 cursor:
-                  (user && user.online && user.inCall) || (user && !user.online)
+                  (user?.online && user?.inCall) || !user?.online
                     ? "initial"
                     : "pointer",
               }}
             />
-            {user && user.online && !user.inCall && (
+            {user?.online && !user?.inCall && (
               <div className="chatContent__callEnable"></div>
             )}
           </button>

@@ -1,0 +1,121 @@
+.storyDetail {
+  position: relative;
+  height: 100vh;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.storeyDetail__left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 25px 0 0 15px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.storeyDetail__logo {
+  background: linear-gradient(to right, #896af3 0%, #53b8f7 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.storyDetail__main {
+  width: 380px;
+  height: calc(100vh - 30px);
+  padding: 10px;
+  background-color: black;
+  border-radius: 7px;
+  position: relative;
+}
+
+.storyDetail__progress {
+  border-radius: 1rem;
+  background-color: rgb(233, 233, 233);
+  align-self: flex-start;
+}
+
+.storyDetail__captionContainer {
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storyDetail__caption {
+  color: floralwhite;
+  font-size: 18px;
+  text-align: center;
+}
+
+.storyDetail__previous,
+.storyDetail__next {
+  width: 40px;
+  height: 40px;
+  background-color: var(--background-color);
+  position: absolute;
+  top: calc(50% - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.storyDetail__previous {
+  left: -50px;
+}
+
+.storyDetail__next {
+  right: -50px;
+}
+
+.storyDetail__previous:hover,
+.storyDetail__next:hover {
+  background-color: #888;
+}
+
+.storyDetail__like {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  background-color: var(--background-color);
+  padding: 15px;
+  border-top-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.storyDetail__like:hover {
+  background-color: var(--gray-color);
+}
+
+.storyDetail__info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.storyDetail__time {
+  color: #555;
+}
+
+.storyDetail__goBack {
+  color: white;
+  background: linear-gradient(to right, #896af3 0%, #53b8f7 100%);
+}

@@ -27,6 +27,15 @@
 .header__logo {
   height: 100%;
   margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.header__text {
+  background: linear-gradient(to right, #896AF3 0%, #53B8F7 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: 30px;
 }
 
 .header__search-icon {
@@ -133,13 +142,9 @@
   margin-right: 10px;
   padding: 0 15px;
   color: white;
-  background-color: var(--main-color);
+  background: linear-gradient(to right, #896AF3 0%, #53B8F7 100%);
   line-height: 40px;
   cursor: pointer;
-}
-
-.header__create:hover {
-  background-color: #1866cc;
 }
 
 .header__create-icon {

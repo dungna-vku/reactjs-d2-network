@@ -2,19 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 
 body {
   width: 100%;
   background-color: var(--background-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --main-color: #1978f2;
-  --text-color: #131f64;
+  --main-color: #896af3;
+  --text-color: #000;
   --gray-color: #888888;
   --red-color: #f24a53;
   --green-color: #5ec027;

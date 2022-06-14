@@ -40,12 +40,14 @@
   color: var(--main-color);
 }
 
-.menu__item a {
+.menu__item a,
+.menu__item p {
   padding: 15px 0;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .menu__item-icon {

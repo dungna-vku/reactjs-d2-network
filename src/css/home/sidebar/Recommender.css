@@ -1,0 +1,43 @@
+.recommender {
+  margin-top: 15px;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.recommender__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.recommender__title {
+  font-weight: 600;
+}
+
+.recommender__more {
+  color: #896af3;
+  font-weight: bold;
+}
+
+.recommender__item {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.recommender__item-text {
+  color: black;
+  margin-left: 10px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.recommender__item-button {
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+  margin-left: auto;
+  color: white;
+  background-color: #896af3;
+  cursor: pointer;
+}

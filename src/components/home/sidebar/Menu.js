@@ -17,30 +17,50 @@ import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 function Menu() {
+  const authEmail = auth.currentUser.email;
   const [newMsg, setNewMsg] = useState(0);
+  const [newNotif, setNewNotif] = useState(0);
 
+  // Lấy số lượng tin nhắn mới
   useEffect(() => {
-    let isSubcribed = true;
-
-    onSnapshot(
-      collection(db, "users", auth.currentUser.email, "chats"),
+    const subcribe = onSnapshot(
+      collection(db, "users", authEmail, "chats"),
       (snapshot) => {
-        if (isSubcribed) {
-          let count = 0;
-          snapshot.docs.forEach((doc) => (count += doc.data().newMsg));
-          setNewMsg(count);
-        }
+        let count = 0;
+        snapshot.docs.forEach((doc) => (count += doc.data().newMsg));
+        setNewMsg(count);
       }
     );
     return () => {
-      isSubcribed = false;
+      subcribe();
     };
-  }, []);
+  }, [authEmail]);
+
+  // Lấy số lượng thông báo mới
+  useEffect(() => {
+    const subcribe = onSnapshot(doc(db, `/users/${authEmail}`), (snapshot) => {
+      setNewNotif(snapshot.data().newNotifications);
+    });
+
+    return () => {
+      subcribe();
+    };
+  }, [authEmail]);
+
+  // Hiển thị / Ẩn thông báo
+  const toggleNotif = (e) => {
+    e.preventDefault();
+
+    const notif = document.getElementById("notification");
+    const notifStyle = window.getComputedStyle(notif);
+
+    notif.style.display = notifStyle.display === "none" ? "flex" : "none";
+  };
 
   const signOutHandler = async (event) => {
     event.preventDefault();
 
-    await updateDoc(doc(db, "users", auth.currentUser.email), {
+    await updateDoc(doc(db, "users", authEmail), {
       online: false,
     })
       .then(() => signOut(auth))
@@ -50,10 +70,10 @@ function Menu() {
   return (
     <ul className="menu br-10 shadow">
       <li className="menu__item active">
-        <a href="/">
+        <Link to="/">
           <FontAwesomeIcon icon={faHome} className="menu__item-icon" />
           <span className="menu__item-name">Trang chủ</span>
-        </a>
+        </Link>
       </li>
 
       {/* <li className="menu__item">
@@ -89,11 +109,13 @@ function Menu() {
       </li> */}
 
       <li className="menu__item">
-        <a href="/">
+        <p onClick={toggleNotif} href="#">
           <FontAwesomeIcon icon={faBell} className="menu__item-icon" />
           <span className="menu__item-name">Thông báo</span>
-          <span className="badge-blue">9+</span>
-        </a>
+          {newNotif > 0 && (
+            <span className="badge-red">{newNotif > 9 ? "9+" : newNotif}</span>
+          )}
+        </p>
       </li>
 
       {/* <li className="menu__item">

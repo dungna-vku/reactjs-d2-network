@@ -1,0 +1,24 @@
+.notification__container {
+  position: fixed;
+  left: 20%;
+  padding: 15px 0 15px;
+  max-width: 40%;
+  max-height: calc(90% - 50px);
+  background-color: white;
+  display: none;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: -4px 4px 15px -10px rgba(0, 0, 0, 0.5),
+    4px -4px 15px -10px rgba(0, 0, 0, 0.5);
+}
+
+.notification__header {
+  margin-bottom: 15px;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.notification__main {
+  flex: 1;
+  overflow-y: auto;
+}
