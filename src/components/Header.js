@@ -4,69 +4,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { auth, db } from "../utils/firebase";
-import {
-  collection,
-  deleteField,
-  doc,
-  getDoc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import NewPostModal from "./NewPostModal";
-// import IncomingCall from "./IncomingCall";
 import Validator from "email-validator";
+import IncomingCall from "./IncomingCall";
 
 function Header({ currentUser }) {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-  // const newWindow = useRef(window);
+  const [url, setUrl] = useState("");
 
   // Lắng nghe cuộc gọi đến
   useEffect(() => {
     if (Validator.validate(currentUser?.inCall)) {
-      const userEmail = currentUser.inCall;
-      const authEmail = auth.currentUser.email;
-
-      getDoc(doc(db, `/users/${userEmail}`)).then((docSnap) => {
-        if (
-          window.confirm(
-            `Bạn có muốn nhận cuộc gọi từ ${docSnap.data().username} hay không?`
-          )
-        ) {
-          const url = `https://d2-videocall.herokuapp.com/?auth=${authEmail}&user=${userEmail}`;
-          console.log(url);
-          // newWindow.current = window.open(url, "_blank");
-          // const callWindow = newWindow.current;
-
-          // Lắng nghe end call
-          // const subcribe = onSnapshot(
-          //   doc(db, `/users/${userEmail}`),
-          //   (snapshot) => {
-          //     const inCall = snapshot.data().inCall;
-
-          //     if (!inCall || inCall === "end") {
-          //       const targetEmail = inCall === "end" ? userEmail : authEmail;
-
-          //       updateDoc(doc(db, `/users/${targetEmail}`), {
-          //         inCall: deleteField(),
-          //       }).then(() => {
-          //         // callWindow.close();
-          //         alert("Cuộc gọi đã kết thúc");
-          //         subcribe();
-          //       });
-          //     }
-          //   }
-          // );
-        } else {
-          updateDoc(doc(db, `/users/${authEmail}`), {
-            inCall: "reject",
-          });
-        }
-      });
+      setUrl(
+        `https://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${currentUser.inCall}`
+      );
+    } else {
+      setUrl("");
     }
-  }, [currentUser.email, currentUser.inCall]);
+  }, [currentUser.inCall]);
 
   // Hiện modal
   const handleOpenModal = (e) => {
@@ -145,6 +104,8 @@ function Header({ currentUser }) {
 
   return (
     <>
+      {url && <IncomingCall incomingUser={currentUser?.inCall} url={url} />}
+
       <div className="header shadow">
         <div className="header__left">
           <div className="header__left-row">

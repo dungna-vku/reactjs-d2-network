@@ -290,5 +290,16 @@
   top: 50px;
   width: 100%;
   background-color: var(--gray-color);
-  /* display: none; */
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+}
+
+.miniChat__outgoingCall a {
+  background-color: var(--green-color);
+  color: white;
+  padding: 7px;
+  border-radius: 7px;
+  font-size: 16px;
+  font-weight: bold;
 }

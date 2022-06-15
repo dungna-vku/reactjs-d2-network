@@ -27,7 +27,7 @@ function MiniChat({ selected }) {
   const [user, setUser] = useState();
   const [messages, setMessages] = useState();
   const [msgContent, setMsgContent] = useState("");
-  const [calling, setCalling] = useState(false);
+  const [calling, setCalling] = useState("");
   // const newWindow = useRef(window);
 
   // Lấy thông tin người đang chat
@@ -288,7 +288,7 @@ function MiniChat({ selected }) {
       updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
         inCall: "connecting",
       }).then(() => {
-        setCalling(true);
+        setCalling("connecting");
 
         // Lắng nghe phản hồi của người dùng
         const unsubcribe = onSnapshot(
@@ -303,7 +303,7 @@ function MiniChat({ selected }) {
                 updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
                   inCall: deleteField(),
                 }).then(() => {
-                  setCalling(false);
+                  setCalling("");
                   alert(`${user.username} đã từ chối cuộc gọi`);
                   unsubcribe();
                 });
@@ -312,30 +312,9 @@ function MiniChat({ selected }) {
               inCall !== "connecting" &&
               inCall !== auth.currentUser.email
             ) {
-              setCalling(false);
               const url = `http://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${selected}&id=${inCall}`;
-              // newWindow.current = window.open(
-              //   url,
-              //   "Video call",
-              //   "width=200,height=200",
-              //   "_blank"
-              // );
-              // const callWindow = newWindow.current;
-              console.log(url);
-
-              // Lắng nghe end call
-              // if (!inCall || inCall === "end") {
-              //   const targetEmail =
-              //     inCall === "end" ? selected : auth.currentUser.email;
-
-              //   updateDoc(doc(db, `/users/${targetEmail}`), {
-              //     inCall: deleteField(),
-              //   }).then(() => {
-              //     // callWindow.close();
-              //     alert("Cuộc gọi đã kết thúc");
-              //     unsubcribe();
-              //   });
-              // }
+              setCalling(url);
+              unsubcribe();
             }
           }
         );
@@ -708,8 +687,19 @@ function MiniChat({ selected }) {
       </div>
 
       {calling && (
-        <div className="miniChat__outgoingCall p-15">
-          <h4>Đang gọi cho {user?.username}</h4>
+        <div className="miniChat__outgoingCall">
+          {calling === "connecting" ? (
+            <h4>Đang gọi cho {user?.username}</h4>
+          ) : (
+            <a
+              href={calling}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setCalling("")}
+            >
+              Bắt đầu cuộc gọi
+            </a>
+          )}
         </div>
       )}
     </div>

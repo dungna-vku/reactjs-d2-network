@@ -1,0 +1,60 @@
+.incomingCall {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.incomingCall__container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+}
+
+.incomingCall__container .avatar {
+  width: 60px;
+  height: 60px;
+}
+
+.incomingCall__content {
+  margin-left: 15px;
+}
+
+.incomingCall__content p {
+  font-size: 18px;
+}
+
+.incomingCall__content p span {
+  font-weight: bold;
+}
+
+.incomingCall__button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.incomingCall__reject,
+.incomingCall__accept {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 7px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.incomingCall__reject {
+  background-color: var(--red-color);
+  margin-right: 30px;
+  outline: none;
+  border: none;
+}
+
+.incomingCall__accept {
+  background-color: var(--green-color);
+}
