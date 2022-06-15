@@ -8,7 +8,7 @@ import {
   setDoc,
   updateDoc,
   getDoc,
-  // deleteField,
+  deleteField,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,7 +27,8 @@ function MiniChat({ selected }) {
   const [user, setUser] = useState();
   const [messages, setMessages] = useState();
   const [msgContent, setMsgContent] = useState("");
-  // const [calling, setCalling] = useState(false);
+  const [calling, setCalling] = useState(false);
+  // const newWindow = useRef(window);
 
   // Lấy thông tin người đang chat
   useEffect(() => {
@@ -277,50 +278,69 @@ function MiniChat({ selected }) {
   // Hàm gọi video
   const videoCall = (event) => {
     event.preventDefault();
-    console.log("Gọi video: chức năng đang phát triển...");
+    // console.log("Gọi video: chức năng đang phát triển...");
 
     // Cập nhật trạng thái cuộc gọi đến cho người nhận
-    // updateDoc(doc(db, `/users/${selected}`), {
-    //   inCall: auth.currentUser.email,
-    // }).then(() => {
-    //   // Cập nhật trạng thái đang kết nối cho người gửi
-    //   updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
-    //     inCall: "connecting",
-    //   }).then(() => {
-    //     setCalling(true);
+    updateDoc(doc(db, `/users/${selected}`), {
+      inCall: auth.currentUser.email,
+    }).then(() => {
+      // Cập nhật trạng thái đang kết nối cho người gửi
+      updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
+        inCall: "connecting",
+      }).then(() => {
+        setCalling(true);
 
-    //     // Lắng nghe phản hồi của người dùng
-    //     const unsubcribe = onSnapshot(
-    //       doc(db, `/users/${selected}`),
-    //       (snapshot) => {
-    //         const inCall = snapshot.data().inCall;
+        // Lắng nghe phản hồi của người dùng
+        const unsubcribe = onSnapshot(
+          doc(db, `/users/${selected}`),
+          (snapshot) => {
+            const inCall = snapshot.data().inCall;
 
-    //         if (inCall === "reject") {
-    //           updateDoc(doc(db, `/users/${selected}`), {
-    //             inCall: deleteField(),
-    //           }).then(() => {
-    //             updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
-    //               inCall: deleteField(),
-    //             }).then(() => {
-    //               setCalling(false);
-    //               alert(`${user.username} đã từ chối cuộc gọi`);
-    //               unsubcribe();
-    //             });
-    //           });
-    //         } else if (
-    //           inCall !== "connecting" &&
-    //           inCall !== auth.currentUser.email
-    //         ) {
-    //           setCalling(false);
-    //           const url = `https://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${selected}&id=${inCall}`;
-    //           window.open(url, "Video call", "width=200,height=200", "_selft");
-    //           console.log("start call");
-    //           unsubcribe();
-    //         }
-    //       }
-    //     );
-    //   });
-    // });
+            if (inCall === "reject") {
+              updateDoc(doc(db, `/users/${selected}`), {
+                inCall: deleteField(),
+              }).then(() => {
+                updateDoc(doc(db, `/users/${auth.currentUser.email}`), {
+                  inCall: deleteField(),
+                }).then(() => {
+                  setCalling(false);
+                  alert(`${user.username} đã từ chối cuộc gọi`);
+                  unsubcribe();
+                });
+              });
+            } else if (
+              inCall !== "connecting" &&
+              inCall !== auth.currentUser.email
+            ) {
+              setCalling(false);
+              const url = `http://d2-videocall.herokuapp.com/?auth=${auth.currentUser.email}&user=${selected}&id=${inCall}`;
+              // newWindow.current = window.open(
+              //   url,
+              //   "Video call",
+              //   "width=200,height=200",
+              //   "_blank"
+              // );
+              // const callWindow = newWindow.current;
+              console.log(url);
+
+              // Lắng nghe end call
+              // if (!inCall || inCall === "end") {
+              //   const targetEmail =
+              //     inCall === "end" ? selected : auth.currentUser.email;
+
+              //   updateDoc(doc(db, `/users/${targetEmail}`), {
+              //     inCall: deleteField(),
+              //   }).then(() => {
+              //     // callWindow.close();
+              //     alert("Cuộc gọi đã kết thúc");
+              //     unsubcribe();
+              //   });
+              // }
+            }
+          }
+        );
+      });
+    });
   };
 
   // Hàm thu nhỏ cửa sổ
@@ -687,11 +707,11 @@ function MiniChat({ selected }) {
         />
       </div>
 
-      {/* {calling && (
+      {calling && (
         <div className="miniChat__outgoingCall p-15">
           <h4>Đang gọi cho {user?.username}</h4>
         </div>
-      )} */}
+      )}
     </div>
   );
 }

@@ -47,20 +47,18 @@ function ContactRow({ contactUser }) {
 
   // Lấy số lượng tin nhắn mới của người liên hệ
   useEffect(() => {
-    let isSubcribed = true;
     if (contactUser) {
-      onSnapshot(
+      const subcribe = onSnapshot(
         doc(db, `/users/${auth.currentUser.email}/chats/${contactUser}`),
         (snapshot) => {
-          if (isSubcribed && snapshot) {
-            setAmountNewMsg(snapshot.data().newMsg);
-          }
+          setAmountNewMsg(snapshot.data().newMsg);
         }
       );
+
+      return () => {
+        subcribe();
+      };
     }
-    return () => {
-      isSubcribed = false;
-    };
   }, [contactUser]);
 
   return (

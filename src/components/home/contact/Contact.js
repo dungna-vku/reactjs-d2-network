@@ -42,12 +42,11 @@ function Contact({ currentUser }) {
             {currentUser.following ? currentUser.following.length : 0}
           </span>
         </div>
-        {currentUser.following &&
-          currentUser.following.map((contactUser, index) => (
-            <div key={index} onClick={(e) => handleSelectUser(e, contactUser)}>
-              <ContactRow contactUser={contactUser} />
-            </div>
-          ))}
+        {currentUser?.following.map((contactUser, index) => (
+          <div key={index} onClick={(e) => handleSelectUser(e, contactUser)}>
+            <ContactRow contactUser={contactUser} />
+          </div>
+        ))}
       </div>
       <MiniChat selected={selected} />
     </>

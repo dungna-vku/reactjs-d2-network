@@ -94,7 +94,7 @@ function StoryReel({ currentUser }) {
       </div>
 
       {stories?.map((story, index) => (
-        <Link to={"/stories"} key={index}>
+        <Link className="storyContainer" to={"/stories"} key={index}>
           <Story story={story} />
         </Link>
       ))}

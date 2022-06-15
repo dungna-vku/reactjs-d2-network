@@ -1,8 +1,7 @@
 .story,
 .story-noImage {
-  width: 140px;
   flex: 1;
-  height: 220px;
+  height: 13.75rem;
   margin-right: 15px;
   display: flex;
   flex-direction: column;
