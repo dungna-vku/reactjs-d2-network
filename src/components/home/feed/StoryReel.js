@@ -99,27 +99,6 @@ function StoryReel({ currentUser }) {
         </Link>
       ))}
 
-      {/* <Story
-        username="Nezuko"
-        profilePicture="https://firebasestorage.googleapis.com/v0/b/d2-network.appspot.com/o/users%2Fnezuko%40gmail.com%2FprofilePicture%2Fnezuko.jpeg?alt=media&token=029ec1a4-4a30-4157-91e4-2f320a1d4ceb"
-        imageURL="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-      />
-      <Story
-        username="Anna Maria"
-        profilePicture="https://firebasestorage.googleapis.com/v0/b/d2-network.appspot.com/o/users%2Fanna%40gmail.com%2FprofilePicture%2Favatar.jpeg?alt=media&token=33f64116-e34f-4c14-8e73-2088320208ff"
-        imageURL="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80"
-      />
-      <Story
-        username="Kamado Tanjirou"
-        profilePicture="https://firebasestorage.googleapis.com/v0/b/d2-network.appspot.com/o/users%2Ftanjirou%40gmail.com%2FprofilePicture%2Ftanjirou.jpeg?alt=media&token=b909cf52-4956-4b3b-b3e5-e270b9c3b842"
-        imageURL="https://helpx.adobe.com/content/dam/help/en/photoshop/how-to/compositing/jcr%3Acontent/main-pars/image/compositing_1408x792.jpg"
-      />
-      <Story
-        username="John Winston"
-        profilePicture="https://firebasestorage.googleapis.com/v0/b/d2-network.appspot.com/o/users%2Fjohn%40gmail.com%2FprofilePicture%2Favatar.jpeg?alt=media&token=251288fa-8bb5-473a-9567-04dbf89cd725"
-        imageURL="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg"
-      /> */}
-
       {stories?.length >= 4 && (
         <Link className="storyReel__button" to={"/stories"}>
           <FontAwesomeIcon

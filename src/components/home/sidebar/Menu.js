@@ -96,13 +96,6 @@ function Menu() {
 
       {/* <li className="menu__item">
         <a href="/">
-          <FontAwesomeIcon icon={faPhotoVideo} className="menu__item-icon" />
-          <span className="menu__item-name">Kho ảnh / video</span>
-        </a>
-      </li> */}
-
-      {/* <li className="menu__item">
-        <a href="/">
           <FontAwesomeIcon icon={faBookmark} className="menu__item-icon" />
           <span className="menu__item-name">Đã lưu</span>
         </a>

@@ -2,7 +2,6 @@ import React from "react";
 import "../../../css/home/feed/PostSender.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
-// import { faGrinBeam } from "@fortawesome/free-regular-svg-icons";
 
 function PostSender({ currentUser }) {
   // Hiện modal

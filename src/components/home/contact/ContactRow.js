@@ -22,29 +22,6 @@ function ContactRow({ contactUser }) {
     };
   }, [contactUser]);
 
-  // Kiểm tra người liên hệ đã từng nhắn tin với người dùng hay chưa
-  // useEffect(() => {
-  //   let isSubcribed = true;
-
-  //   onSnapshot(
-  //     collection(db, "users", auth.currentUser.email, "chats"),
-  //     (snapshot) => {
-  //       if (isSubcribed) {
-  //         let ok = false;
-  //         snapshot.docs.forEach((doc) => {
-  //           if (doc.id === user) {
-  //             ok = true;
-  //           }
-  //         });
-  //         setHasChat(ok);
-  //       }
-  //     }
-  //   );
-  //   return () => {
-  //     isSubcribed = false;
-  //   };
-  // }, [user]);
-
   // Lấy số lượng tin nhắn mới của người liên hệ
   useEffect(() => {
     if (contactUser) {

@@ -77,17 +77,6 @@ function MiniChat({ selected }) {
   const handleSendMsg = async () => {
     const time = new Date().getTime();
 
-    // // Nếu người dùng chưa từng nhắn tin với người được chọn thì thêm mới
-    // if (!docSnap.exists()) {
-    //   await setDoc(
-    //     doc(db, `/users/${selected}/chats/${auth.currentUser.email}`),
-    //     {
-    //       inChat: false,
-    //       newMsg: 0,
-    //     }
-    //   );
-    // }
-
     // Thêm tin nhắn mới vào messages của người gửi
     await addDoc(
       collection(
@@ -183,15 +172,6 @@ function MiniChat({ selected }) {
   const handleSengImg = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    // // Nếu người dùng chưa từng nhắn tin với người được chọn thì thêm mới
-    // await setDoc(
-    //   doc(db, `/users/${selected}/chats/${auth.currentUser.email}`),
-    //   {
-    //     inChat: false,
-    //     newMsg: 0,
-    //   }
-    // );
 
     const storageRef = ref(
       storage,
