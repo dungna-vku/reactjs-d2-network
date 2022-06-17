@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   collectionGroup,
@@ -19,6 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 function StoryDetail({ currentUser }) {
+  const authEmail = auth.currentUser.email;
   const [stories, setStories] = useState([]);
   const [users, setUsers] = useState([]);
   const [index, setIndex] = useState(0);
@@ -38,7 +40,7 @@ function StoryDetail({ currentUser }) {
 
             if (
               currentUser.following.includes(data.email) ||
-              data.email === auth.currentUser.email
+              data.email === authEmail
             ) {
               newStories.push({
                 id: story.id,
@@ -107,14 +109,16 @@ function StoryDetail({ currentUser }) {
         `/users/${stories[index].data.email}/stories/${stories[index].id}`
       ),
       {
-        likes: arrayUnion(auth.currentUser.email),
+        likes: stories[index].data.likes.includes(authEmail)
+          ? arrayRemove(authEmail)
+          : arrayUnion(authEmail),
       }
     ).then(() => {
-      if (stories[index].data.email !== auth.currentUser.email) {
+      if (stories[index].data.email !== authEmail) {
         addDoc(
           collection(db, `/users/${stories[index].data.email}/notifications`),
           {
-            userEmail: auth.currentUser.email,
+            userEmail: authEmail,
             time: new Date().getTime(),
             type: "like story",
             relatedId: stories[index].id,
@@ -207,7 +211,7 @@ function StoryDetail({ currentUser }) {
           <div
             className="storyDetail__like"
             style={
-              stories[index]?.data.likes.includes(auth.currentUser.email)
+              stories[index]?.data.likes.includes(authEmail)
                 ? { color: "red" }
                 : { color: "black" }
             }
